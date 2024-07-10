@@ -67,16 +67,31 @@ async function fetchTrackingData(trackingNumber) {
 
     if (response.ok) {
       const data = await response.json();
-      updateTrackingInfo(data.eventos);
-      await fetchMultimedia(trackingNumber);
+      if (data.eventos && data.eventos.length > 0) {
+        updateTrackingInfo(data.eventos);
+        await fetchMultimedia(trackingNumber);
+      } else {
+        showError();
+      }
     } else {
-      console.error('Error al obtener los datos de seguimiento:', response.status);
+      showError();
     }
   } catch (error) {
-    console.error('Error al obtener los datos de seguimiento:', error);
+    showError();
   } finally {
     hideSpinner(); // Ocultar spinner al completar la carga
   }
+}
+
+// Función para mostrar un mensaje de error
+function showError() {
+  trackingItemsContainer.innerHTML = `
+    <div class="error-message">
+      <p><i class="bi bi-exclamation-octagon-fill"></i> No localizo datos con la guía compartida, corrobore los datos.</p>
+      <img src="ruta_de_tu_imagen_de_error.jpg" alt="Error">
+    </div>
+  `;
+  resultContainer.innerHTML = ''; // Limpiar el contenedor de resultados
 }
 
 // Función para obtener datos multimedia
@@ -154,7 +169,7 @@ function updateTrackingInfo(trackingEvents) {
   if (trackingEvents.length > 0) {
     const firstMovementElement = document.createElement('div');
     firstMovementElement.classList.add('first-movement');
-    firstMovementElement.innerHTML = `<i class="bi bi-info-circle-fill"></i> Último movimiento: ${trackingEvents[trackingEvents.length - 1].Estado}`;
+    firstMovementElement.innerHTML = `<i class="bi bi-info-circle-fill"></i> Último movimiento Guia '${trackingInput.value.trim()}': ${trackingEvents[trackingEvents.length - 1].Estado}`;
     trackingItemsContainer.appendChild(firstMovementElement);
   }
   
