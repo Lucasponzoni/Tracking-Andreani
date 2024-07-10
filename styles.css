@@ -1,10 +1,10 @@
 :root {
-    --color-primary: #FF3B30; /* Rojo primario */
+    --color-primary: red; /* Rojo primario */
     --color-secondary: #4CD964; /* Verde secundario (por contraste) */
     --color-text: #333333;
     --color-background: #F2F2F7;
-    --color-timeline: #E5E5EA; /* Color de la línea de tiempo */
-    --color-timeline-dot: #FF3B30; /* Color de los puntos en la línea de tiempo */
+    --color-timeline: #787878; /* Color de la línea de tiempo */
+    --color-timeline-dot: red; /* Color de los puntos en la línea de tiempo */
     --font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica", "Arial", sans-serif;
   }
   
@@ -78,7 +78,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(255, 59, 48, 0.8); /* Rojo translúcido */
+    background-color: red; /* Rojo translúcido */
     z-index: 1;
   }
   
@@ -89,8 +89,25 @@
   .tracking-items-container > :nth-child(2) {
     background: rgb(255,242,185);
     background: linear-gradient(180deg, rgba(255,242,185,1) 0%, rgba(255,255,255,0.5013655975085347) 100%);
-    color: #FF3B30; /* Rojo primario */
     border-radius: 0 10px 10px 0;
+  }
+
+  .tracking-items-container > :nth-child(2) > .status{
+    background-color: red;
+    border-radius: 10PX;
+    padding: 0.5rem;
+    color: yellow;
+    font-weight: 800;
+    width: fit-content;
+    text-transform: uppercase;
+  }
+
+  .tracking-items-container > :nth-child(2) > .date {
+    color: green;
+  }
+
+  .tracking-items-container > :nth-child(2) > .location {
+    color: rgb(0, 0, 0);
   }
   
   .tracking-item {
@@ -129,15 +146,6 @@
   .tracking-item:last-child:after {
     background-color: grey;
   }
-
-  .tracking-item > :nth-child(2) {
-    background-color: var(--color-secondary);
-    width: fit-content;
-    color: yellow;
-    font-weight: bold;
-    padding: 5px;
-    border-radius: 8px;
-  }
   
 
   .tracking-item .date {
@@ -156,6 +164,8 @@
   .tracking-item .location {
     font-size: 14px;
     color: #86868B;
+    text-transform: uppercase;
+    font-weight: 600;
   }
   
   .tracking-item .reason {
@@ -201,13 +211,13 @@
   .first-movement {
     margin-top: 5px;
     max-width: fit-content;
-    background-color: red;
+    background-color: green;
     color: white;
     font-weight: bold;
     padding: 5px;
     border-radius: 5px;
     position: relative;
-    top: 0px;
+    top: -1px;
     left: -15px;
   }
   
@@ -222,4 +232,15 @@
     border-radius: 15px;
     padding: 1rem;
     color: grey;
+}
+
+.btn-danger, .tracking-button{
+  background-color: red;
+  border: red solid 1px;
+}
+
+.btn-danger:hover, .tracking-button:hover{
+  background-color: #333;
+  border: #333 solid 1px;
+  transition: .4s;
 }
