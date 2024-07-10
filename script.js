@@ -103,13 +103,12 @@ async function fetchTrackingData(trackingNumber) {
 
 // Función para mostrar un mensaje de error
 function showError() {
-  trackingItemsContainer.innerHTML = `
+    IdTracking.innerHTML = `
     <div class="error-message">
       <p><i class="bi bi-exclamation-octagon-fill"></i> No localizo datos con la guía compartida, corrobore los datos.</p>
       <img src="./img/error.gif" alt="error">
     </div>
   `;
-  IdTracking.innerHTML = '';
   resultContainer.innerHTML = ''; // Limpiar el contenedor de resultados
 }
 
