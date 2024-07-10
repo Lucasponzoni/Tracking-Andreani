@@ -96,7 +96,7 @@
     background-color: red;
     border-radius: 10PX;
     padding: 0.5rem;
-    color: yellow;
+    color: white;
     font-weight: 800;
     width: fit-content;
     text-transform: uppercase;
@@ -175,8 +175,8 @@
   
   .loader {
     color: #333;
-    font-family: Consolas, Menlo, Monaco, monospace;
-    font-weight: bold;
+    font-family: "Signika", sans-serif;
+    font-weight: 800;
     font-size: 2rem;
     opacity: 0.8;
     display: none;
@@ -184,7 +184,7 @@
   
   @media (max-width: 600px) {
     .loader {
-      font-size: 1rem;
+      font-size: 1.5rem;
     }
   }
   
@@ -218,7 +218,7 @@
   .first-movement {
     margin-top: 5px;
     max-width: fit-content;
-    background-color: green;
+    background-color: rgb(84, 84, 84);
     color: white;
     font-weight: bold;
     padding: 5px;
@@ -235,10 +235,17 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     border-radius: 15px;
-    padding: 1rem;
     color: grey;
+    margin: 0;
+}
+
+#resultContainer > p{
+  margin: 0;
+}
+
+.mt-3{
+  margin-top: .2rem !important;
 }
 
 .btn-danger, .tracking-button{
@@ -250,4 +257,57 @@
   background-color: #333;
   border: #333 solid 1px;
   transition: .4s;
+}
+
+.error-message{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.error-message > img{
+  width: 300px;
+}
+
+#resultContainerPdf{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+
+.form-inline{
+  margin-top: .2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#emailInput{
+  border-radius: 10px 0 0 10px;
+  min-width: 300px;
+  height: 2.5rem;
+}
+
+#sendEmailButton{
+  border-radius: 0 10px 10px 0;
+  max-height: 2.5rem;
+  border: solid 2px red;
+}
+
+#sendEmailButton:hover{
+  border: #333 solid 2px;
+}
+
+.tracking-number{
+  font-family: "Signika", sans-serif;
+  text-align: center;
+  padding: 1rem;
+  font-weight: 800;
+  font-size: 2rem;
+  color: red;
+  padding-bottom: .2rem;
 }
