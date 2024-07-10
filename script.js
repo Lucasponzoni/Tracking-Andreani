@@ -1,3 +1,17 @@
+document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const trackingNumber = urlParams.get('trackingNumber');
+    
+    if (trackingNumber) {
+        const trackingInput = document.getElementById('tracking-input');
+        trackingInput.value = trackingNumber;
+        
+        // Simular clic en el botón de búsqueda
+        const trackingButton = document.querySelector('.tracking-button');
+        trackingButton.click();
+    }
+});
+
 const trackingInput = document.querySelector('.tracking-input');
 const trackingButton = document.querySelector('.tracking-button');
 const trackingItemsContainer = document.querySelector('.tracking-items-container');
