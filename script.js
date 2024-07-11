@@ -254,8 +254,15 @@ function updateTrackingInfo(trackingEvents) {
 
         const locationElement = document.createElement('div');
         locationElement.classList.add('location');
-        locationElement.textContent = evento.Sucursal;
-
+        // Reemplazar valores específicos con sus correspondientes textos
+        if (evento.Sucursal === "Sucursal Genérica") {
+            locationElement.textContent = "DEPÓSITO CENTRAL NOVOGAR, ROSARIO";
+        } else if (evento.Sucursal === "Centro De Operaciones" || evento.Sucursal === "Rosario") {
+            locationElement.textContent = "PLANTA LOGÍSTICA ANDREANI, ROSARIO";
+        } else {
+            locationElement.textContent = evento.Sucursal;
+        }
+        
         if (evento.Motivo) {
             const reasonElement = document.createElement('div');
             reasonElement.classList.add('reason');
