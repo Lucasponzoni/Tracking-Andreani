@@ -71,6 +71,7 @@ async function fetchTrackingData(trackingNumber) {
     try {
         trackingInfo.style.display = 'block';
         showSpinner(); // Mostrar spinner al iniciar la carga
+        dateStatusDiv.innerHTML = '';
         trackingItemsContainer.innerHTML = '';
         resultContainer.innerHTML = '';
         IdTracking.innerHTML = '';
@@ -217,8 +218,17 @@ function formatFecha(fechaString) {
     return fechaFormateada;
 }
 
+// Función para formatear la fecha (sin la hora)
+function formatFechaUltimoyPrimerMovimiento(fecha) {
+    const date = new Date(fecha);
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return date.toLocaleDateString('es-ES', options);
+}
+
 // Función para actualizar la información de seguimiento en la interfaz
+const dateStatusDiv = document.getElementById('DateSatatus');
 function updateTrackingInfo(trackingEvents) {
+    dateStatusDiv.innerHTML = '';
     trackingItemsContainer.innerHTML = ''; // Limpiar el contenedor antes de agregar nuevos elementos
 
     // Obtener el número de envío del input
@@ -230,12 +240,65 @@ function updateTrackingInfo(trackingEvents) {
     trackingNumberDiv.textContent = `Número de Envío: ${trackingNumber}`;
     IdTracking.appendChild(trackingNumberDiv);
     
-    if (trackingEvents.length > 0) {
+    // Filtrar eventos válidos (diferentes de "Pendiente de ingreso")
+    const validEvents = trackingEvents.filter(evento => evento.Estado !== 'Pendiente de ingreso');
+    
+    if (validEvents.length > 0) {
+        const firstEvent = validEvents[0];
+        const lastEvent = validEvents[validEvents.length - 1];
 
-      const firstMovementElement = document.createElement('div');
-      firstMovementElement.classList.add('first-movement');
-      firstMovementElement.innerHTML = `<i class="bi bi-info-circle-fill"></i> Último movimiento: ${trackingEvents[trackingEvents.length - 1].Estado}`;
-      trackingItemsContainer.appendChild(firstMovementElement);
+        const firstDate = new Date(firstEvent.Fecha);
+        const lastDate = new Date(lastEvent.Fecha);
+        const currentDate = new Date(); // Fecha actual
+
+        const firstDateFormatted = formatFechaUltimoyPrimerMovimiento(firstEvent.Fecha);
+        const lastDateFormatted = formatFechaUltimoyPrimerMovimiento(lastEvent.Fecha);
+
+        const daysInTransit = calcularDiasHabiles(firstDate, currentDate);
+        const daysBetweenFirstAndLast = calcularDiasHabiles(firstDate, lastDate);
+
+        let statusMessage = '';
+
+        if (lastEvent.Estado === 'Entregado' || lastEvent.Estado === 'Rendición') {
+            statusMessage = `La unidad fue entregada con éxito en ${daysBetweenFirstAndLast} días hábiles.`;
+        } else if (lastEvent.Estado === 'Siniestrado') {
+            statusMessage = `La unidad fue siniestrada a los ${daysBetweenFirstAndLast} días hábiles, contactar a Posventa.`;
+        } else if (daysInTransit <= 10) {
+            const daysLeft = 10 - daysInTransit;
+            statusMessage = `El envío se encuentra en plazo, lleva ${daysInTransit} días hábiles en viaje, restan ${daysLeft} días hábiles para que pase a demora.`;
+        } else if (lastEvent.Estado === 'Devuelto') {
+            statusMessage = `La unidad fue Devuelta a los ${daysBetweenFirstAndLast} días hábiles, contactar a Posventa para analizar reenvio o reintegro de dinero.`;
+
+        } else if (lastEvent.Estado === 'Anulado') {
+            statusMessage = `La unidad fue Anulada a los ${daysBetweenFirstAndLast} días hábiles, contactar a Posventa.`;
+
+        } else {
+            const delayDays = daysInTransit - 10;
+            statusMessage = `La unidad se encuentra fuera del plazo normal de entrega, lleva ${daysInTransit} días hábiles en viaje, contactar a Posventa ya que posee ${delayDays} días hábiles de demora.`;
+        }
+
+        const dateStatusDiv = document.getElementById('DateSatatus');
+        dateStatusDiv.innerHTML = `
+    <div id="Primer-Ultimo-Envio">
+        <p><i class="bi bi-calendar-check"></i> Inicío viaje: ${firstDateFormatted}</p>
+        <p><i class="bi bi-calendar-event"></i> Último movimiento: ${lastDateFormatted}</p>
+    </div>
+    <div id="Status-Envio">
+        <p><i class="bi bi-exclamation-octagon-fill"></i> ${statusMessage}</p>
+    </div>
+`;
+
+        const firstMovementElement = document.createElement('div');
+        firstMovementElement.classList.add('first-movement');
+        firstMovementElement.innerHTML = `<i class="bi bi-info-circle-fill"></i> Último movimiento: ${lastEvent.Estado}`;
+        trackingItemsContainer.appendChild(firstMovementElement);
+    } else {
+        const dateStatusDiv = document.getElementById('DateSatatus');
+        dateStatusDiv.innerHTML = `
+            <div>
+                <p>No hay movimientos válidos para mostrar.</p>
+            </div>
+        `;
     }
 
     for (let i = trackingEvents.length - 1; i >= 0; i--) {
@@ -279,6 +342,51 @@ function updateTrackingInfo(trackingEvents) {
 
     trackingItemsContainer.style.display = 'block'; // Mostrar contenedor después de actualizar
 }
+
+// Función para calcular los días hábiles entre dos fechas
+function calcularDiasHabiles(fechaInicial, fechaFinal) {
+    let diasHabiles = 0;
+    const diaMilisegundos = 24 * 60 * 60 * 1000;
+    
+    for (let fecha = new Date(fechaInicial); fecha <= fechaFinal; fecha = new Date(fecha.getTime() + diaMilisegundos)) {
+        const diaSemana = fecha.getDay();
+        if (diaSemana !== 0 && diaSemana !== 6) { // 0 es Domingo, 6 es Sábado
+            diasHabiles++;
+        }
+    }
+    
+    return diasHabiles;
+}
+
+// Función para calcular los días hábiles entre dos fechas
+function calcularDiasHabiles(fechaInicio, fechaFin) {
+    let diasHabiles = 0;
+    const feriados =  [
+        // Lista de feriados en Argentina en formato 'AAAA-MM-DD'
+        '2023-01-01', '2023-02-20', '2023-02-21', '2023-03-24', '2023-04-07',
+        '2023-05-01', '2023-05-25', '2023-06-19', '2023-08-21', '2023-10-09',
+        '2023-11-20', '2023-12-08', '2023-12-25',
+        '2024-01-01', '2024-02-12', '2024-02-13', '2024-03-24', '2024-03-29',
+        '2024-05-01', '2024-05-25', '2024-06-17', '2024-08-19', '2024-10-14',
+        '2024-11-18', '2024-12-08', '2024-12-25'
+        ];
+
+    const startDate = new Date(fechaInicio);
+    const endDate = new Date(fechaFin);
+    const currentDate = new Date(startDate);
+
+    while (currentDate <= endDate) {
+        const dayOfWeek = currentDate.getDay();
+        const dateString = currentDate.toISOString().split('T')[0];
+        if (dayOfWeek !== 0 && dayOfWeek !== 6 && !feriados.includes(dateString)) {
+            diasHabiles++;
+        }
+        currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    return diasHabiles;
+}
+
 
 // Evento click del botón de búsqueda
 trackingButton.addEventListener('click', async () => {

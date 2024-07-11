@@ -322,3 +322,34 @@
   color: red;
   padding-bottom: .2rem;
 }
+
+#Primer-Ultimo-Envio{
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  gap: .4rem;
+  align-items: center;
+}
+
+#Primer-Ultimo-Envio > p{
+  background-color: #4CD964;
+  padding: .3rem;
+  border-radius: 10px;
+  font-family: "Signika", sans-serif;
+  font-weight: 600;
+  color: white;
+}
+
+#Primer-Ultimo-Envio > p:last-child{
+  background-color: orange;
+}
+
+#Status-Envio{
+  font-size: 1.1rem;
+  font-family: "Signika", sans-serif;
+  font-weight: 800;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
