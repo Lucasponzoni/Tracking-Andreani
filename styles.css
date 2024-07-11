@@ -33,6 +33,12 @@
   .header > img {
     max-width: 450px;
   }
+
+  @media (max-width: 600px) {
+    .header > img  {
+      max-width: 350px;
+    }
+  }
   
   .tracking-input-container {
     display: flex;
