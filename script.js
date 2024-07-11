@@ -295,7 +295,7 @@ function updateTrackingInfo(trackingEvents) {
     } else {
         const dateStatusDiv = document.getElementById('DateSatatus');
         dateStatusDiv.innerHTML = `
-            <div>
+            <div id="Status-Envio-Error">
                 <p>No hay movimientos válidos para mostrar.</p>
             </div>
         `;

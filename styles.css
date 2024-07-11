@@ -344,7 +344,7 @@
   background-color: orange;
 }
 
-#Status-Envio{
+#Status-Envio, #Status-Envio-Error{
   font-size: 1.1rem;
   font-family: "Signika", sans-serif;
   font-weight: 800;
