@@ -265,7 +265,8 @@ function updateTrackingInfo(trackingEvents) {
             statusMessage = `La unidad fue siniestrada a los ${daysBetweenFirstAndLast} días hábiles, contactar a Posventa.`;
         } else if (daysInTransit <= 10) {
             const daysLeft = 10 - daysInTransit;
-            statusMessage = `El envío se encuentra en plazo, lleva ${daysInTransit} días hábiles en viaje, restan ${daysLeft} días hábiles para que pase a demora.`;
+            statusMessage = `El envío se encuentra
+             en plazo, lleva ${daysInTransit} días hábiles en viaje, restan ${daysLeft} días hábiles para que pase a demora.`;
         } else if (lastEvent.Estado === 'Devuelto') {
             statusMessage = `La unidad fue Devuelta a los ${daysBetweenFirstAndLast} días hábiles, contactar a Posventa para analizar reenvio o reintegro de dinero.`;
 
@@ -321,7 +322,7 @@ function updateTrackingInfo(trackingEvents) {
         if (evento.Sucursal === "Sucursal Genérica") {
             locationElement.textContent = "DEPÓSITO CENTRAL NOVOGAR, ROSARIO";
         } else if (evento.Sucursal === "Centro De Operaciones" || evento.Sucursal === "Rosario") {
-            locationElement.textContent = "PLANTA LOGÍSTICA ANDREANI, ROSARIO";
+            locationElement.textContent = "PLANTA LOGÍSTICA CORREO AND, ROSARIO";
         } else {
             locationElement.textContent = evento.Sucursal;
         }
