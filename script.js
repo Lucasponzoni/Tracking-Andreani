@@ -89,6 +89,7 @@ async function fetchTrackingData(trackingNumber) {
             updateTrackingInfo(data.eventos);
             await fetchMultimedia(trackingNumber);
             createPdfButton();
+            console.log('Respuesta de la API TRAZAS:', data);
         } else {
             console.error('Error al obtener los datos de seguimiento:', response.status);
             showError();
