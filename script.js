@@ -317,6 +317,10 @@ function updateTrackingInfo(trackingEvents) {
         statusElement.classList.add('status');
         statusElement.textContent = evento.Estado;
 
+        const statusElement2 = document.createElement('div');
+        statusElement2.classList.add('status2');
+        statusElement2.textContent = evento.Traduccion;
+
         const locationElement = document.createElement('div');
         locationElement.classList.add('location');
         // Reemplazar valores específicos con sus correspondientes textos
@@ -328,6 +332,10 @@ function updateTrackingInfo(trackingEvents) {
             locationElement.textContent = evento.Sucursal;
         }
         
+        if (evento.SucursalId) {
+            locationElement.textContent += `, Id Sucursal: ${evento.SucursalId}`;
+        }
+        
         if (evento.Motivo) {
             const reasonElement = document.createElement('div');
             reasonElement.classList.add('reason');
@@ -337,6 +345,7 @@ function updateTrackingInfo(trackingEvents) {
 
         trackingItem.appendChild(dateElement);
         trackingItem.appendChild(statusElement);
+        trackingItem.appendChild(statusElement2);
         trackingItem.appendChild(locationElement);
 
         trackingItemsContainer.appendChild(trackingItem);
