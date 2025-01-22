@@ -282,8 +282,8 @@ function updateTrackingInfo(trackingEvents) {
         const dateStatusDiv = document.getElementById('DateSatatus');
         dateStatusDiv.innerHTML = `
     <div id="Primer-Ultimo-Envio">
-        <p><i class="bi bi-calendar-check"></i> Inicío viaje: ${firstDateFormatted}</p>
-        <p><i class="bi bi-calendar-event"></i> Último movimiento: ${lastDateFormatted}</p>
+        <p><i class="bi bi-calendar-check"></i> Inicío: ${firstDateFormatted}</p>
+        <p><i class="bi bi-calendar-event"></i> Último: ${lastDateFormatted}</p>
     </div>
     <div id="Status-Envio">
         <p><i class="bi bi-exclamation-octagon-fill"></i> ${statusMessage}</p>
