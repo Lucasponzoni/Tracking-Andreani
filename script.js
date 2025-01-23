@@ -303,53 +303,85 @@ function updateTrackingInfo(trackingEvents) {
         `;
     }
 
-    for (let i = trackingEvents.length - 1; i >= 0; i--) {
-        const evento = trackingEvents[i];
-
-        const trackingItem = document.createElement('div');
-        trackingItem.classList.add('tracking-item');
-
-        const dateElement = document.createElement('div');
-        dateElement.classList.add('date');
-        dateElement.textContent = formatFecha(evento.Fecha);
-
-        const statusElement = document.createElement('div');
-        statusElement.classList.add('status');
-        statusElement.textContent = evento.Estado;
-
-        const statusElement2 = document.createElement('div');
-        statusElement2.classList.add('status2');
-        statusElement2.textContent = evento.Traduccion;
-
-        const locationElement = document.createElement('div');
-        locationElement.classList.add('location');
-        // Reemplazar valores específicos con sus correspondientes textos
-        if (evento.Sucursal === "Sucursal Genérica") {
-            locationElement.textContent = "DEPÓSITO CENTRAL NOVOGAR, ROSARIO";
-        } else if (evento.Sucursal === "Centro De Operaciones" || evento.Sucursal === "Rosario") {
-            locationElement.textContent = "PLANTA LOGÍSTICA CORREO AND, ROSARIO";
-        } else {
-            locationElement.textContent = evento.Sucursal;
-        }
+        for (let i = trackingEvents.length - 1; i >= 0; i--) {
+            const evento = trackingEvents[i];
         
-        if (evento.SucursalId) {
-            locationElement.textContent += `, Id Sucursal: ${evento.SucursalId}`;
-        }
+            const trackingItem = document.createElement('div');
+            trackingItem.classList.add('tracking-item');
         
-        if (evento.Motivo) {
-            const reasonElement = document.createElement('div');
-            reasonElement.classList.add('reason');
-            reasonElement.textContent = evento.Motivo;
-            trackingItem.appendChild(reasonElement);
+            const dateElement = document.createElement('div');
+            dateElement.classList.add('date');
+            dateElement.textContent = formatFecha(evento.Fecha);
+        
+            const statusElement = document.createElement('div');
+            statusElement.classList.add('status');
+            statusElement.textContent = evento.Estado;
+        
+            const statusElement2 = document.createElement('div');
+            statusElement2.classList.add('status2');
+            statusElement2.textContent = evento.Traduccion;
+        
+            const locationElement = document.createElement('div');
+            locationElement.classList.add('location');
+            // Reemplazar valores específicos con sus correspondientes textos
+            if (evento.Sucursal === "Sucursal Genérica") {
+                locationElement.textContent = "DEPÓSITO CENTRAL NOVOGAR, ROSARIO";
+            } else if (evento.Sucursal === "Centro De Operaciones" || evento.Sucursal === "Rosario") {
+                locationElement.textContent = "PLANTA LOGÍSTICA CORREO AND, ROSARIO";
+            } else {
+                locationElement.textContent = evento.Sucursal;
+            }
+            
+            if (evento.SucursalId) {
+                locationElement.textContent += `, Id Sucursal: ${evento.SucursalId}`;
+            }
+            
+            if (evento.Motivo) {
+                const reasonElement = document.createElement('div');
+                reasonElement.classList.add('reason');
+                reasonElement.textContent = evento.Motivo;
+                trackingItem.appendChild(reasonElement);
+            }
+        
+            trackingItem.appendChild(dateElement);
+            trackingItem.appendChild(statusElement);
+            trackingItem.appendChild(statusElement2);
+        
+            if (!statusElement2.textContent) {
+                const statusCases = {
+                    "Entregado": "ENVIO ENTREGADO",
+                    "En distribución": "ENVIO CON SALIDA A REPARTO",
+                    "En viaje": "ENVIO CON SALIDA DE SUCURSAL",
+                    "Ingreso al circuito operativo": "ENVIO RECEPCIONADO EN PLANTA"
+                };
+            
+                if (statusCases[statusElement.textContent]) {
+                    statusElement2.textContent = statusCases[statusElement.textContent];
+                } else if (statusElement.textContent === "Indefinido" && evento.Comentario && evento.Comentario.startsWith("Entregar dia")) {
+                    statusElement2.textContent = "TURNO ASIGNADO DE ENTREGA";
+                } else {
+                    statusElement2.innerHTML = '<i class="bi bi-send-plus-fill"></i>';
+                }
+            }
+        
+            if (evento.Comentario) {
+                const commentElement = document.createElement('div');
+                commentElement.classList.add('comment');
+                if (evento.Comentario.startsWith("Rep.")) {
+                    commentElement.textContent = evento.Comentario.replace("Rep.", "Repartidor Asignado:");
+                } else if (evento.Comentario.startsWith("Entregar dia")) {
+                    statusElement.textContent = "Se coordina turno de entrega";
+                    commentElement.textContent = evento.Comentario;
+                } else {
+                    commentElement.textContent = evento.Comentario;
+                }
+                trackingItem.appendChild(commentElement);
+            }
+        
+            trackingItem.appendChild(locationElement);
+        
+            trackingItemsContainer.appendChild(trackingItem);
         }
-
-        trackingItem.appendChild(dateElement);
-        trackingItem.appendChild(statusElement);
-        trackingItem.appendChild(statusElement2);
-        trackingItem.appendChild(locationElement);
-
-        trackingItemsContainer.appendChild(trackingItem);
-    }
 
     trackingItemsContainer.style.display = 'block'; // Mostrar contenedor después de actualizar
 }
