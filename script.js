@@ -357,8 +357,15 @@ function updateTrackingInfo(trackingEvents) {
             
                 if (statusCases[statusElement.textContent]) {
                     statusElement2.textContent = statusCases[statusElement.textContent];
-                } else if (statusElement.textContent === "Indefinido" && evento.Comentario && evento.Comentario.startsWith("Entregar dia")) {
-                    statusElement2.textContent = "TURNO ASIGNADO DE ENTREGA";
+                } else if (statusElement.textContent === "Indefinido") {
+                    if (evento.Comentario && evento.Comentario.startsWith("Entregar dia")) {
+                        statusElement2.textContent = "TURNO ASIGNADO DE ENTREGA";
+                    } else if (evento.Comentario && evento.Comentario.startsWith("FAC")) {
+                        statusElement.textContent = "RENDIDO";
+                        statusElement2.textContent = "ENTREGADO Y FACTURADO, REMITO EN VIAJE A NOVOGAR";
+                    } else {
+                        statusElement2.innerHTML = '<i class="bi bi-send-plus-fill"></i>';
+                    }
                 } else {
                     statusElement2.innerHTML = '<i class="bi bi-send-plus-fill"></i>';
                 }
