@@ -8,6 +8,11 @@
     --font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica", "Arial", sans-serif;
 }
 
+@font-face {
+    font-family: 'Modica Oft';
+    src: url('./fonts/modica.otf'),
+}
+
 body {
     font-family: var(--font-family);
     background: var(--color-background);
@@ -18,6 +23,7 @@ body {
 }
 
 .container {
+    min-height: 100vh;
     max-width: 650px;
     margin: 0 auto;
     padding: 20px;
@@ -45,6 +51,53 @@ body {
     justify-content: center;
     margin-top: 16px;
 }
+
+/* FOOTER */
+
+.logo-novogar{
+    width: 100px;
+    padding: .5rem;
+}
+
+footer{
+    padding: 1rem;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;    
+}
+
+footer > a{
+    text-decoration: none;
+    color: grey;
+    transition: .5s;
+}
+
+footer > a:hover{
+    text-decoration: underline;
+    font-weight: 900;
+    color: red;
+}
+
+.logo-foot{
+    width: 120px;
+}
+
+#real-trends{
+    width: 40px;
+}
+
+#Meli-trends{
+    width: 40px;
+}
+
+.www{
+    font-family: 'Modica Oft';
+    font-size: larger;
+}
+
+/* FIN FOOTER */
 
 .tracking-input {
     flex-grow: 1;

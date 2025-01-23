@@ -350,6 +350,7 @@ function updateTrackingInfo(trackingEvents) {
             if (!statusElement2.textContent) {
                 const statusCases = {
                     "Entregado": "ENVIO ENTREGADO",
+                    "EN RENDICION": "YA ENTREGAMOS TU ENVIO",
                     "En distribución": "ENVIO CON SALIDA A REPARTO",
                     "En viaje": "ENVIO CON SALIDA DE SUCURSAL",
                     "Ingreso al circuito operativo": "ENVIO RECEPCIONADO EN PLANTA"
