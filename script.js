@@ -343,6 +343,12 @@ function updateTrackingInfo(trackingEvents) {
                 reasonElement.classList.add('reason');
                 reasonElement.textContent = evento.Motivo;
                 trackingItem.appendChild(reasonElement);
+        
+                // Verificar si el motivo es "P1D1"
+                if (evento.Motivo === "p1D1") {
+                    statusElement.textContent = "Entregado";
+                    statusElement2.textContent = "ENTREGADO EN DOMICILIO";
+                }
             }
         
             trackingItem.appendChild(dateElement);
@@ -378,24 +384,24 @@ function updateTrackingInfo(trackingEvents) {
                 }
             }
         
-            if (statusElement.textContent === "ESPERANDO CONSOLIDACION") {
+            if (statusElement.textContent === "ESPERANDO CONSOLIDACION" && !statusElement2.textContent) {
                 esperandoConsolidacionCount++;
-                if (esperandoConsolidacionCount === 3) {
+                if (esperandoConsolidacionCount === 1) {
                     statusElement2.textContent = "YA TENEMOS TU PAQUETE";
                     locationElement.textContent = "PLANTA ROSARIO CIRCUNVALACION";
                 } else if (esperandoConsolidacionCount === 2) {
                     statusElement2.textContent = "TU PAQUETE VIAJA A DESTINO";
                     locationElement.textContent = "PLANTA ROSARIO CIRCUNVALACION";
-                } else if (esperandoConsolidacionCount === 1) {
+                } else if (esperandoConsolidacionCount === 3) {
                     if (evento.Sucursal === "9") {
                         statusElement2.textContent = "TU PAQUETE CONTINUA VIAJANDO A DESTINO";
                         locationElement.textContent = "PLANTA ROSARIO CIRCUNVALACION";
                     } else {
-                        statusElement2.textContent = "TU PAQUETE LLEGO A PLANTA";
+                        statusElement2.textContent = "TU PAQUETE LLEGO A DESTINO";
                     }
                 }
             }
-
+        
             if (evento.Comentario) {
                 const commentElement = document.createElement('div');
                 commentElement.classList.add('comment');
