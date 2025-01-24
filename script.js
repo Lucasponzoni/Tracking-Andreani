@@ -356,7 +356,7 @@ function updateTrackingInfo(trackingEvents) {
                     "Entregado": "ENVIO ENTREGADO",
                     "PENDIENTE DE CIERRE DE HOJA DE RUTA": "ENVIO ENTREGADO, PROCESANDO REMITO",
                     "EN ESPERA DE ASIGNACION": "EN DESTINO, PROGRAMANDO VISITA",
-                    "EN RENDICION": "YA ENTREGAMOS TU ENVIO",
+                    "EN RENDICION": "YA ENTREGAMOS TU ENVIO, REMITO PROCESADO",
                     "En distribución": "ENVIO CON SALIDA A REPARTO",
                     "En viaje": "ENVIO CON SALIDA DE SUCURSAL",
                     "Ingreso al circuito operativo": "ENVIO RECEPCIONADO EN PLANTA"
