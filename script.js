@@ -392,8 +392,12 @@ function updateTrackingInfo(trackingEvents) {
                         statusElement2.innerHTML = '<i class="bi bi-send-plus-fill"></i>';
                     }
                 } else if (!evento.Estado && !evento.Traduccion && !evento.Sucursal && !evento.SucursalId && !evento.Motivo && evento.Fecha) {
-                    statusElement2.innerHTML = '<i class="bi bi-clock-fill"></i> RECIBIMOS EL CAMION CON TU CARGA, DESCONSOLIDANDO';                } else {
+                    statusElement2.innerHTML = '<i class="bi bi-clock-fill"></i> GENERAMOS LA ETIQUETA DE ENVIO';                } else {
                 }
+            }
+
+            if (evento.Motivo === "p1D1" || evento.Motivo === "AL20") {
+                statusElement2.innerHTML = '<i class="bi bi-check-circle-fill"></i> ENTREGADO';
             }
         
             if (statusElement.textContent === "ESPERANDO CONSOLIDACION") {
