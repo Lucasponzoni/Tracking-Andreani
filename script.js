@@ -160,16 +160,23 @@ async function fetchMultimedia(trackingNumber) {
     const multimediaUrl = `https://apis.andreani.com/v1/envios/${trackingNumber}/multimedia`;
 
     try {
-        const response = await fetch(`https://proxy.cors.sh/${multimediaUrl}`, {
+        const requestOptions = {
             headers: {
                 'x-cors-api-key': 'temp_8af643011e844ffa8043d8aa3baa0d77',
                 'x-authorization-token': authToken
             }
+        };
+
+        console.log('Request:', {
+            url: `https://proxy.cors.sh/${multimediaUrl}`,
+            options: requestOptions
         });
+
+        const response = await fetch(`https://proxy.cors.sh/${multimediaUrl}`, requestOptions);
 
         if (response.ok) {
             const data = await response.json();
-            console.log('Respuesta de la API Multimedia:', data);
+            console.log('Response:', data);
 
             // Mostrar resultado en la interfaz
             if (data.multimedia && data.multimedia.length > 0) {
@@ -195,6 +202,7 @@ async function fetchMultimedia(trackingNumber) {
             }
         } else {
             console.error('Error al obtener los datos de multimedia:', response.status);
+            console.log('Response:', response);
             resultContainer.innerHTML = `<p><i class="bi bi-exclamation-octagon-fill"></i> Error al obtener los datos de multimedia: ${response.status}</p>`;
         }
     } catch (error) {
