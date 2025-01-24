@@ -391,25 +391,25 @@ function updateTrackingInfo(trackingEvents) {
                     } else {
                         statusElement2.innerHTML = '<i class="bi bi-send-plus-fill"></i>';
                     }
-                } else {
-                    statusElement2.innerHTML = '<i class="bi bi-send-plus-fill"></i>';
+                } else if (!evento.Estado && !evento.Traduccion && !evento.Sucursal && !evento.SucursalId && !evento.Motivo && evento.Fecha) {
+                    statusElement2.innerHTML = '<i class="bi bi-clock-fill"></i> RECIBIMOS EL CAMION CON TU CARGA, DESCONSOLIDANDO';                } else {
                 }
             }
         
             if (statusElement.textContent === "ESPERANDO CONSOLIDACION") {
                 esperandoConsolidacionCount++;
                 if (esperandoConsolidacionCount === 3) {
-                    statusElement2.textContent = "YA TENEMOS TU PAQUETE";
+                    statusElement2.innerHTML = '<i class="bi bi-box-seam-fill"></i> YA TENEMOS TU PAQUETE';
                     locationElement.textContent = "PLANTA ROSARIO CIRCUNVALACION";
                 } else if (esperandoConsolidacionCount === 2) {
-                    statusElement2.textContent = "TU PAQUETE VIAJA A DESTINO";
+                    statusElement2.innerHTML = '<i class="bi bi-truck"></i> TU PAQUETE VIAJA A DESTINO';
                     locationElement.textContent = "PLANTA ROSARIO CIRCUNVALACION";
                 } else if (esperandoConsolidacionCount === 1) {
                     if (evento.Sucursal === "9") {
-                        statusElement2.textContent = "TU PAQUETE CONTINUA VIAJANDO A DESTINO";
+                        statusElement2.innerHTML = '<i class="bi bi-truck"></i> TU PAQUETE CONTINUA VIAJANDO A DESTINO';
                         locationElement.textContent = "PLANTA ROSARIO CIRCUNVALACION";
                     } else {
-                        statusElement2.textContent = "TU PAQUETE LLEGO A PLANTA";
+                        statusElement2.innerHTML = '<i class="bi bi-lightning-charge-fill"></i> TU PAQUETE LLEGO A PLANTA';
                     }
                 }
             }
