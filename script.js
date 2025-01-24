@@ -289,12 +289,30 @@ function updateTrackingInfo(trackingEvents) {
         <p><i class="bi bi-exclamation-octagon-fill"></i> ${statusMessage}</p>
     </div>
 `;
-
+        
+        // Crear la imagen
+        const andreaniLogo = document.createElement('img');
+        andreaniLogo.src = './img/Logo_de_Andreani.jpg';
+        andreaniLogo.alt = 'Logo de Andreani';
+        andreaniLogo.classList.add('andreani-logo');
+        andreaniLogo.style.display = 'block';
+        andreaniLogo.style.margin = '0';
+        
+        // Crear el contenedor para la imagen y el texto
         const firstMovementElement = document.createElement('div');
         firstMovementElement.classList.add('first-movement');
-        firstMovementElement.innerHTML = `<i class="bi bi-info-circle-fill"></i> Último movimiento: ${lastEvent.Estado}`;
-        trackingItemsContainer.appendChild(firstMovementElement);
-    } else {
+        firstMovementElement.style.textAlign = 'start'; // Alinear al principio
+        
+        // Crear el texto
+        const movementText = document.createElement('p');
+        movementText.innerHTML = `<i class="bi bi-info-circle-fill"></i> Último movimiento ${trackingNumber}: ${lastEvent.Estado}`;
+        movementText.classList.add('movement-text');
+        
+        // Añadir la imagen y el texto al elemento
+        firstMovementElement.appendChild(andreaniLogo);
+        firstMovementElement.appendChild(movementText);
+        
+        trackingItemsContainer.appendChild(firstMovementElement);    } else {
         const dateStatusDiv = document.getElementById('DateSatatus');
         dateStatusDiv.innerHTML = `
             <div id="Status-Envio-Error">
@@ -333,22 +351,16 @@ function updateTrackingInfo(trackingEvents) {
             } else {
                 locationElement.textContent = evento.Sucursal;
             }
-        
+            
             if (evento.SucursalId) {
                 locationElement.textContent += `, Id Sucursal: ${evento.SucursalId}`;
             }
-        
+            
             if (evento.Motivo) {
                 const reasonElement = document.createElement('div');
                 reasonElement.classList.add('reason');
                 reasonElement.textContent = evento.Motivo;
                 trackingItem.appendChild(reasonElement);
-        
-                // Verificar si el motivo es "P1D1"
-                if (evento.Motivo === "p1D1") {
-                    statusElement.textContent = "Entregado";
-                    statusElement2.textContent = "ENTREGADO EN DOMICILIO";
-                }
             }
         
             trackingItem.appendChild(dateElement);
@@ -384,20 +396,20 @@ function updateTrackingInfo(trackingEvents) {
                 }
             }
         
-            if (statusElement.textContent === "ESPERANDO CONSOLIDACION" && !statusElement2.textContent) {
+            if (statusElement.textContent === "ESPERANDO CONSOLIDACION") {
                 esperandoConsolidacionCount++;
-                if (esperandoConsolidacionCount === 1) {
+                if (esperandoConsolidacionCount === 3) {
                     statusElement2.textContent = "YA TENEMOS TU PAQUETE";
                     locationElement.textContent = "PLANTA ROSARIO CIRCUNVALACION";
                 } else if (esperandoConsolidacionCount === 2) {
                     statusElement2.textContent = "TU PAQUETE VIAJA A DESTINO";
                     locationElement.textContent = "PLANTA ROSARIO CIRCUNVALACION";
-                } else if (esperandoConsolidacionCount === 3) {
+                } else if (esperandoConsolidacionCount === 1) {
                     if (evento.Sucursal === "9") {
                         statusElement2.textContent = "TU PAQUETE CONTINUA VIAJANDO A DESTINO";
                         locationElement.textContent = "PLANTA ROSARIO CIRCUNVALACION";
                     } else {
-                        statusElement2.textContent = "TU PAQUETE LLEGO A DESTINO";
+                        statusElement2.textContent = "TU PAQUETE LLEGO A PLANTA";
                     }
                 }
             }
@@ -421,23 +433,47 @@ function updateTrackingInfo(trackingEvents) {
             trackingItemsContainer.appendChild(trackingItem);
         }
         
-        trackingItemsContainer.style.display = 'block'; // Mostrar contenedor después de actualizar
-    }
-
-// Función para calcular los días hábiles entre dos fechas
-function calcularDiasHabiles(fechaInicial, fechaFinal) {
-    let diasHabiles = 0;
-    const diaMilisegundos = 24 * 60 * 60 * 1000;
-    
-    for (let fecha = new Date(fechaInicial); fecha <= fechaFinal; fecha = new Date(fecha.getTime() + diaMilisegundos)) {
-        const diaSemana = fecha.getDay();
-        if (diaSemana !== 0 && diaSemana !== 6) { // 0 es Domingo, 6 es Sábado
-            diasHabiles++;
+        // Crear el div centrado con la imagen y el texto
+        const footerDiv = document.createElement('div');
+        footerDiv.classList.add('footer-div');
+        footerDiv.style.textAlign = 'start'; // Alinear al principio
+        footerDiv.style.marginTop = '20px';
+        
+        const footerImage = document.createElement('img');
+        footerImage.src = './img/Novogar Logo Large.png';
+        footerImage.alt = 'Novogar Logo';
+        footerImage.classList.add('footer-image');
+        footerImage.style.display = 'block';
+        footerImage.style.margin = '0';
+        
+        const footerText = document.createElement('p');
+        footerText.textContent = 'Trazas de envio © 2025 ANDREANI para Blas Oscar Martinucci e Hijos S.A.';
+        footerText.classList.add('footer-text');
+        footerText.style.fontFamily = 'var(--font-family)';
+        footerText.style.color = 'var(--color-text)';
+        
+        const mercadoLibreText = document.createElement('p');
+        mercadoLibreText.innerHTML = 'En Mercado Libre visita nuestra tienda oficial haciendo click <a href="https://www.mercadolibre.com.ar/tienda/novogar?item_id=MLA1307072425&category_id=MLA5726&official_store_id=102442&client=recoview-selleritems&recos_listing=true" target="_blank">aquí <i class="bi bi-box-arrow-up-right"></i></a>';
+        mercadoLibreText.classList.add('mercado-libre-text');
+        mercadoLibreText.style.fontFamily = 'var(--font-family)';
+        mercadoLibreText.style.color = 'var(--color-text)';
+        
+        const mercadoLibreImage = document.createElement('img');
+        mercadoLibreImage.src = './img/Tienda.png';
+        mercadoLibreImage.alt = 'Tienda';
+        mercadoLibreImage.classList.add('mercado-libre-image');
+        mercadoLibreImage.style.display = 'block';
+        mercadoLibreImage.style.margin = '0';
+        
+        footerDiv.appendChild(footerImage);
+        footerDiv.appendChild(footerText);
+        footerDiv.appendChild(mercadoLibreImage);
+        footerDiv.appendChild(mercadoLibreText);
+        
+        trackingItemsContainer.appendChild(footerDiv);
+        
+        trackingItemsContainer.style.display = 'block'; // Mostrar contenedor después de actualizar        
         }
-    }
-    
-    return diasHabiles;
-}
 
 // Función para calcular los días hábiles entre dos fechas
 function calcularDiasHabiles(fechaInicio, fechaFin) {
