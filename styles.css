@@ -214,7 +214,7 @@ footer > a:hover{
 }
 
 .tracking-items-container > :nth-child(2) > .location {
-    color: var(--color-text);
+    color: #3dc95e;
     text-transform: uppercase;
     font-weight: 600;
 }
