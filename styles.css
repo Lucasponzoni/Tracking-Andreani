@@ -59,6 +59,10 @@ body {
     padding: .5rem;
 }
 
+.hidden{
+    display: none;
+}
+
 footer{
     padding: 1rem;
     background-color: white;
@@ -164,13 +168,24 @@ footer > a:hover{
 }
 
 .tracking-items-container > :nth-child(2) > .status {
-    background-color: #28a745;
-    padding: 5px;
-    border-radius: 5px;
+    background-color: #3dc95e;
+    padding: 7px;
+    border-radius: 7px;
     color: white;
-    font-weight: 800;
+    font-weight: 600;
+    margin-bottom: 5px;
     width: fit-content;
     text-transform: uppercase;
+    position: relative; /* Asegura que el ícono se posicione correctamente */
+}
+
+.tracking-items-container > :nth-child(2) > .status::before {
+    content: '\f00c';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    font-size: 16px;
+    margin-right: 5px; 
+    vertical-align: middle; 
 }
 
 .tracking-items-container > :nth-child(2) > .status2 {
@@ -184,9 +199,18 @@ footer > a:hover{
 }
 
 .tracking-items-container > :nth-child(2) > .date {
-    color: #28a745;
-    text-decoration: underline;
+    color: #3dc95e;
     font-weight: 600;
+    position: relative;
+}
+
+.tracking-items-container > :nth-child(2) > .date::before {
+    content: '\f073';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    font-size: 16px;
+    margin-right: 5px;
+    vertical-align: middle; 
 }
 
 .tracking-items-container > :nth-child(2) > .location {
@@ -224,7 +248,7 @@ footer > a:hover{
 }
 
 .tracking-item:nth-child(2):after {
-    background-color: #28a745; 
+    background-color: #3dc95e; 
     content: '\f00c';
     font-family: 'Font Awesome 5 Free';
     font-weight: 900;
@@ -256,8 +280,14 @@ footer > a:hover{
 
 .tracking-item .status {
     font-weight: 600;
-    font-size: 16px;
-    color: var(--color-primary);
+    font-size: 14px;
+    text-transform: uppercase;
+    background-color: #f0f0f0;
+    margin-bottom: 5px;
+    border-radius: 7px;
+    width: fit-content;
+    padding: 7px;
+    color: black;
 }
 
 .tracking-item .status2 {
@@ -271,9 +301,30 @@ footer > a:hover{
     margin-top: 2px;
 }
 
+.tracking-item .status3 {
+    font-weight: 800;
+    font-size: 14px;
+    color: var(--color-primary);
+    width: fit-content;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 2px;
+}
+
 .tracking-item .location {
     font-size: 14px;
     color: #86868B;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.tracking-item .location2 {
+    font-size: 14px;
+    color: var(--color-primary);
+    background-color: #ffe7e7;
+    border-radius: 7px;
+    padding: 10px;
+    width: fit-content;
     text-transform: uppercase;
     font-weight: 600;
 }
@@ -467,7 +518,7 @@ footer > a:hover{
 #Status-Envio, #Status-Envio-Error {
     font-size: 1.2rem;
     font-family: var(--font-family);
-    font-weight: 700;
+    font-weight: 600;
     display: flex;
     text-align: center;
     justify-content: center;

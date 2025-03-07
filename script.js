@@ -347,7 +347,21 @@ function updateTrackingInfo(trackingEvents) {
         
             const statusElement2 = document.createElement('div');
             statusElement2.classList.add('status2');
-            statusElement2.textContent = evento.Traduccion;
+
+            if (!evento.Traduccion) {
+                statusElement2.classList.add('hidden'); 
+            } else {
+                statusElement2.textContent = evento.Traduccion;
+            }
+
+            const statusElement3 = document.createElement('div');
+            statusElement3.classList.add('location2');
+
+            if (!evento.Ciclo) {
+                statusElement3.classList.add('hidden'); 
+            } else {
+                statusElement3.textContent = `Ciclo Actual: ${evento.Ciclo}`; 
+}
         
             const locationElement = document.createElement('div');
             locationElement.classList.add('location');
@@ -374,17 +388,10 @@ function updateTrackingInfo(trackingEvents) {
             trackingItem.appendChild(dateElement);
             trackingItem.appendChild(statusElement);
             trackingItem.appendChild(statusElement2);
+            trackingItem.appendChild(statusElement3);
         
             if (!statusElement2.textContent) {
                 const statusCases = {
-                    "EN TRANSPORTE": "VIAJANDO A DESTINO",
-                    "ESPERANDO CONSOLIDACION": "PROCESANDO ENVIO",
-                    "Entregado": "ENVIO ENTREGADO",
-                    "PENDIENTE DE CIERRE DE HOJA DE RUTA": "ENVIO ENTREGADO, PROCESANDO REMITO",
-                    "EN ESPERA DE ASIGNACION": "EN DESTINO, PROGRAMANDO VISITA",
-                    "EN RENDICION": "YA ENTREGAMOS TU ENVIO, REMITO PROCESADO",
-                    "En distribución": "ENVIO CON SALIDA A REPARTO",
-                    "En viaje": "ENVIO CON SALIDA DE SUCURSAL",
                     "Ingreso al circuito operativo": "ENVIO RECEPCIONADO EN PLANTA"
                 };
         
