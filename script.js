@@ -4,14 +4,11 @@
    - UI: Tailwind · temas claro/oscuro · status hero + stepper + timeline
    ========================================================================= */
 
-const PROXY = 'https://novogar-cors-proxy.vercel.app/';
+/* Proxy propio: guarda las credenciales de Andreani y resuelve el token
+   del lado del servidor. Nada de esto queda expuesto en el navegador. */
+const PROXY = 'https://novogar-andreani-api.vercel.app/api/andreani';
 const proxied = (url) => `${PROXY}?u=${encodeURIComponent(url)}`;
 
-const LOGIN_URL = 'https://apis.andreani.com/login';
-const username = 'novogar_gla';
-const password = 'JoBOraCDJZC';
-
-let authToken = '';
 let lastTracking = null; // datos para el PDF
 
 /* ----------------------------- Referencias DOM ---------------------------- */
@@ -52,23 +49,6 @@ function clearSections() {
 
 function openResult() { resultSection.classList.remove('hidden'); }
 
-/* --------------------------- Autenticación -------------------------------- */
-async function getAuthToken() {
-    try {
-        const response = await fetch(proxied(LOGIN_URL), {
-            method: 'GET',
-            headers: { 'Authorization': `Basic ${btoa(`${username}:${password}`)}` }
-        });
-        if (response.ok) {
-            authToken = (await response.json()).token;
-        } else {
-            console.error('Error al obtener el token:', response.status);
-        }
-    } catch (error) {
-        console.error('Error al obtener el token:', error);
-    }
-}
-
 /* --------------------------- Datos de trazas ------------------------------ */
 async function fetchTrackingData(trackingNumber) {
     const trazasUrl = `https://apis.andreani.com/v2/envios/${trackingNumber}/trazas`;
@@ -77,9 +57,7 @@ async function fetchTrackingData(trackingNumber) {
         clearSections();
         showSpinner();
 
-        const response = await fetch(proxied(trazasUrl), {
-            headers: { 'x-authorization-token': authToken }
-        });
+        const response = await fetch(proxied(trazasUrl));
 
         if (response.ok) {
             const data = await response.json();
@@ -242,9 +220,7 @@ function renderStepper(stage) {
 async function fetchMultimedia(trackingNumber) {
     const multimediaUrl = `https://apis.andreani.com/v1/envios/${trackingNumber}/multimedia`;
     try {
-        const response = await fetch(proxied(multimediaUrl), {
-            headers: { 'x-authorization-token': authToken }
-        });
+        const response = await fetch(proxied(multimediaUrl));
 
         if (response.ok) {
             const data = await response.json();
@@ -726,13 +702,7 @@ async function buscar() {
     openResult();
     clearSections();
     showSpinner();
-    await getAuthToken();
-    if (authToken) {
-        await fetchTrackingData(trackingNumber);
-    } else {
-        hideSpinner();
-        showError();
-    }
+    await fetchTrackingData(trackingNumber);
 }
 
 searchBtn.addEventListener('click', buscar);
